@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import os
 
+import config
 from config import TOKEN
 
 
@@ -28,9 +29,7 @@ class Rockstar(commands.Bot):
                         f"cogs.{filename[:-3]}"
                     )
 
-                    print(
-                        f"Loaded {filename}"
-                    )
+                    print(f"Loaded {filename}")
 
                 except Exception as e:
 
@@ -38,25 +37,41 @@ class Rockstar(commands.Bot):
                         f"Failed loading {filename}: {e}"
                     )
 
-
         synced = await self.tree.sync()
 
-        print(
-            f"Synced {len(synced)} commands"
-        )
-
+        print(f"Synced {len(synced)} commands")
 
 
 bot = Rockstar()
+
+
+@bot.tree.interaction_check
+async def global_command_check(
+    interaction: discord.Interaction
+):
+
+    # Owner can always use commands
+    if interaction.user.id == config.OWNER_ID:
+        return True
+
+    if not config.BOT_ENABLED:
+
+        await interaction.response.send_message(
+            "⭐ Rockstar is currently disabled.",
+            ephemeral=True
+        )
+
+        return False
+
+    return True
 
 
 @bot.event
 async def on_ready():
 
     print("--------------------------------")
-    print(f"🎸 Rockstar online as {bot.user}")
+    print(f"⭐ Rockstar online as {bot.user}")
     print("--------------------------------")
-
 
 
 bot.run(TOKEN)
