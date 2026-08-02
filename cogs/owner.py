@@ -423,7 +423,7 @@ class Owner(commands.Cog):
         description="Turn Rockstar on or off"
     )
     @discord.app_commands.describe(status="on or off")
-    async def bot_status(
+    async def control_bot(
         self,
         interaction: discord.Interaction,
         status: str

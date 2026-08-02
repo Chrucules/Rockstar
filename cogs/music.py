@@ -7,7 +7,7 @@ from discord.ext import commands
 from utils.embeds import create_embed, error
 
 
-LAVALINK_URI = os.getenv("LAVALINK_URI")
+LAVALINK_URI = os.getenv("ROCKSTAR_LAVALINK_URI")
 LAVALINK_PASSWORD = os.getenv("LAVALINK_PASSWORD")
 
 
